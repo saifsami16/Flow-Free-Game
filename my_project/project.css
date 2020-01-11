@@ -1,0 +1,129 @@
+main img.floated {
+    float: left;
+    width: 20%;
+    margin: 10px;
+  }
+  ul {
+      display: table;
+  }
+  div.table-container {
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center;
+    clear: both;
+  }
+  table.game {
+    border-collapse: collapse;
+    --line-width: 5px;
+    margin: 20px;
+  
+    -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+         -khtml-user-select: none; /* Konqueror HTML */
+           -moz-user-select: none; /* Old versions of Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                                      supported by Chrome, Opera and Firefox */
+                                      
+  }
+  table.game tr:nth-child(even) {
+      background: none;
+  }
+  table.game td {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    position: relative;
+    border: solid black 1px;
+    text-align: center;
+    font-size: 120%;
+    font-family: sans-serif;
+  }
+  
+  .right::before,
+  .left::before {
+    content: "";
+    height: calc(var(--line-width) * 2);
+    position: absolute;
+    top: calc(50% - var(--line-width));
+    left: calc(-1 * var(--line-width));
+    right: calc(-1 * var(--line-width));
+    border-radius: calc(2 * var(--line-width));
+    z-index: -1;
+  }
+  
+  .right::before {
+    left: calc(50% - var(--line-width));
+  }
+  
+  .left::before {
+    right: calc(50% - var(--line-width));
+  }
+  
+  .left.right::before {
+    left: calc(-1 * var(--line-width));
+    right: calc(-1 * var(--line-width));
+  }
+  
+  .top::after,
+  .bottom::after {
+    content: "";
+    width: calc(var(--line-width) * 2);
+    left: calc(50% - var(--line-width));
+    top: calc(-1 * var(--line-width));
+    bottom: calc(-1 * var(--line-width));
+    position: absolute;
+    border-radius: calc(2 * var(--line-width));
+    z-index: -1;
+  }
+  
+  .bottom::after {
+    top: calc(50% - var(--line-width));
+  }
+  
+  .top::after {
+    bottom: calc(50% - var(--line-width));
+  }
+  
+  .bottom.top::after {
+    top: calc(-1 * var(--line-width));
+    bottom: calc(-1 * var(--line-width));
+  }
+  
+  .color1::after, .color1::before {
+    background: #f44336;
+  }
+  .color2::after, .color2::before {
+    background: #009688;
+  }
+  .color3::after, .color3::before {
+    background: #ffc107;
+  }
+  .color4::after, .color4::before {
+    background: #2196f3;
+  }
+  .color5::after, .color5::before {
+    background: #e91e63;
+  }
+  .color6::after, .color6::before {
+    background: #607d8d;
+  }
+  .color7::after, .color7::before {
+    background: #9c27b0;
+  }
+  .color8::after, .color8::before {
+    background: #4caf50;
+  }
+  .color9::after, .color9::before {
+    background: #ff5722;
+  }
+  .color10::after, .color10::before {
+    background: #9e9e9e;
+  }
+  .color11::after, .color11::before {
+    background: #cddc39;
+  }
+  .color12::after, .color12::before {
+    background: #795548;
+  }
