@@ -63,8 +63,30 @@ function init(level)
 };
 
 */
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+function win() {
+    var params = getUrlVars();
+    console.log(params);
+    console.log('entered win()');
+    var http = new XMLHttpRequest();
+    var url = 'level_controller.php?count=1&level='+params['id'];
+    http.open('GET', url, true);
 
+    //Send the proper header information along with the request
 
+    http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+            console.log(http.responseText);
+        }
+    }
+    http.send();
+}
 
 const appState = {
     easyBoard: [
@@ -82,7 +104,9 @@ function for_trial(){
 
 
 function init(x){
-    main(x);
+  main(x);
+ // return;
+    
 }
 
 function main(Board){
@@ -126,6 +150,7 @@ function _loadLevel(array) {
 
 
     grid.innerHTML = html;
+   
 };
 let temp1,temp2;
 
@@ -257,10 +282,23 @@ grid.addEventListener('mouseup', function (event) {
         console.log(max);
      if(match_cases == max){
         window.alert("YOU WIN");
-        history.go(0);
+        win();
+       // let x = 1;
+       // return true;
+//  ADD STUDD HERE
+   // let levels_json = loadJSON('/levels_data.json');
+    //levelInfo = JSON.parse(response);
+         
+   // return;
+
+       // history.go(0);
 
     }
+   // let gr =   document.getElementById('grid'); //Pointer to html element
+   // grid.innerHTML = "saif dsfasdfasdfasdf";
     
+   
+
     mouse_down = false;
    
     

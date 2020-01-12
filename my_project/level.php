@@ -1,7 +1,6 @@
 <?php
 require_once("utils/_init.php");
 require_once("header.php");
-
 $my_level=$levels_data->findAll();
 
 ?>
@@ -80,6 +79,17 @@ $my = [
          let y = JSON.parse(x);
          init(y);
         </script>
+       
+        <?php if(verify_post("won")){
+  $levels_store->add($_SESSION["banda"]["name"]);
+  // redirect("levels.php");
+  echo "<p> <b> You won the game! </b> </p>";
+}
+?>
+ <form method="post" style="display: none" >
+  <input type="number" name="won"><br>
+  <button type="submit">WON</button>
+</form>
 
  <!--       <input type="button" id="2" onclick="init(this)" value="Medium" />
         <input type="button" id="3" onclick="init(this)" value="Hard" />

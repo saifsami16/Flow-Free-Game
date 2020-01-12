@@ -1,17 +1,17 @@
 [
     {
         "name": "easy",
-        "dif": "2",
-        "count": "0"
+        "dif": "1",
+        "count": 4
     },
     {
         "name": "medium",
-        "dif": "3",
-        "count": "0"
+        "dif": "2",
+        "count": 1
     },
     {
         "name": "hard",
-        "dif": "4",
+        "dif": "3",
         "count": "0"
     }
 ]

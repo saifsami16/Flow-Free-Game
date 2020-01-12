@@ -18,7 +18,7 @@ $level = $levels_store->findAll();
 <?php foreach ($level as $l) : ?>
 <tr>
     <td><a href="level.php?id=<?= $l["name"] ?>"><?= $l["name"] ?></a></td>
-    <td><?= $l["dif"] ?></td>
+     <td><?= $l["dif"] ?></td>
     <td><?= $l["count"] ?></td>
 </tr>
 <?php endforeach; ?>
