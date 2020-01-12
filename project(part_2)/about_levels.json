@@ -1,0 +1,22 @@
+[
+    {
+        "name": "easy",
+        "dif": "1",
+        "count": 22
+    },
+    {
+        "name": "medium",
+        "dif": "2",
+        "count": 1
+    },
+    {
+        "name": "hard",
+        "dif": "4",
+        "count": "0"
+    },
+    {
+        "name": "pehla",
+        "dif": "3",
+        "count": 1
+    }
+]

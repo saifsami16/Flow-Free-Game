@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "saif",
+        "email": "saifsami1@com",
+        "pass": "qwerty12",
+        "easy": "yes",
+        "medium": "yes",
+        "hard": "no",
+        "pehla": "no"
+    },
+    {
+        "id": 2,
+        "name": "admin",
+        "email": "admin@admin.com",
+        "pass": "admin",
+        "easy": "no",
+        "medium": "no",
+        "hard": "no",
+        "pehla": "yes"
+    }
+]
