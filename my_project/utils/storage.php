@@ -58,7 +58,7 @@ class JSONStorage implements IStorage {
   }
 
   public function delete($id) {
-    unset($this->contents[id]);
+    unset($this->contents[$id]);
   }
 
   public function update($id, $entry) {

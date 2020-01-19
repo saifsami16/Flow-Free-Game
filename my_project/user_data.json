@@ -1,8 +1,22 @@
 [
     {
         "id": 1,
+        "name": "admin",
+        "email": "admin@admin.com",
+        "pass": "d033e22ae348aeb5660fc2140aec35850c4da997",
+        "easy": "yes",
+        "medium": "yes",
+        "hard": "no",
+        "random_one": "yes"
+    },
+    {
+        "id": 2,
         "name": "saif",
-        "email": "saifsami1@com",
-        "pass": "qwerty12"
+        "email": "saifsami16@yahoo.com",
+        "pass": "44e4ff42bd6e83e3dbe5599a09463887667612b4",
+        "easy": "yes",
+        "medium": "no",
+        "hard": "yes",
+        "random_one": "yes"
     }
 ]

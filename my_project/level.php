@@ -1,8 +1,9 @@
 <?php
 require_once("utils/_init.php");
 require_once("header.php");
+if(!isset($_SESSION["banda"]))redirect("index.php");
 $my_level=$levels_data->findAll();
-
+$save_state = $save->findAll();
 ?>
 
 
@@ -75,23 +76,62 @@ $my = [
        <script>
          var div = document.getElementById("dom-target");
          var x = div.textContent;
-         x = x.replace(/\s+/g, '');
+         //x = x.replace(/\s+/g, '');
          let y = JSON.parse(x);
          init(y);
         </script>
-       
-        <?php if(verify_post("won")){
-  $levels_store->add($_SESSION["banda"]["name"]);
-  // redirect("levels.php");
-  echo "<p> <b> You won the game! </b> </p>";
-}
-?>
- <form method="post" style="display: none" >
-  <input type="number" name="won"><br>
-  <button type="submit">WON</button>
-</form>
+        
+       <input type="button" id="no" onclick="clicked_save()" value="Save" /><br><br>
 
- <!--       <input type="button" id="2" onclick="init(this)" value="Medium" />
+<p><span id="txtHint"></span></p>
+
+
+
+<!-- 
+       <script>
+        function loadDoc() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("demo").innerHTML =
+          this.responseText;
+            }
+          };
+          xhttp.open("GET", "ajax_info.txt", true);
+          xhttp.send();
+        }
+        </script>
+      
+      <script>
+function showHint(str) {
+    if (str.length == 0) {
+        document.getElementById("txtHint").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "gethint.php?q=" + str, true);
+        xmlhttp.send();
+    }
+}
+</script>
+</head>
+<body>
+
+<p><b>Start typing a name in the input field below:</b></p>
+<form>
+First name: <input type="text" onkeyup="showHint(this.value)">
+</form>
+<p>Suggestions: <span id="txtHint"></span></p>
+
+
+      
+
+        <input type="button" id="2" onclick="init(this)" value="Medium" />
         <input type="button" id="3" onclick="init(this)" value="Hard" />
   -->
 </body>

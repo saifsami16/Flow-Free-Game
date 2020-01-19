@@ -63,6 +63,9 @@ function init(level)
 };
 
 */
+
+
+
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -70,19 +73,23 @@ function getUrlVars() {
     });
     return vars;
 }
+
+
+
+
 function win() {
     var params = getUrlVars();
-    console.log(params);
-    console.log('entered win()');
+    // console.log('entered win()');
+    // console.log(params);
     var http = new XMLHttpRequest();
-    var url = 'level_controller.php?count=1&level='+params['id'];
+    var url = 'level_controller.php?count=1&level='+params['id'];//add here
     http.open('GET', url, true);
 
     //Send the proper header information along with the request
 
     http.onreadystatechange = function() {//Call a function when the state changes.
         if(http.readyState == 4 && http.status == 200) {
-            console.log(http.responseText);
+           // console.log(http.responseText);
         }
     }
     http.send();
@@ -97,25 +104,75 @@ const appState = {
         ['1', '', '', '', ''],
     ]
 };
+let Ecopy = [];
+let match_cases = 0;
+let met = false;
+
 function for_trial(){
+    Ecopy = []; //ch
+    match_cases = 0;
     main(appState.easyBoard);
+    //history.go(0)
+    //location.replace("index.php");
 }
 
 
+function load_save(string_save) {
+    var str = string_save.id;
+    var res = str.split(" ");
+     var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                 // document.getElementById("txtHint").innerHTML = this.responseText;
+                 y_load = JSON.parse(this.responseText);
+                 load_game_save(y_load,res[2]);
+            }
+        };
+        xmlhttp.open("GET", "load_save.php?time=" + res[0] + "&date=" + res[1] + "&name=" + res[3] + "&case="+res[2], true);
+        xmlhttp.send();
+    // console.log(res[3]);
+}
+
+function clicked_save() {
+    var par = getUrlVars();
+    var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                  document.getElementById("txtHint").innerHTML = this.responseText;
+               // console.log(this.responseText);
+            }
+        };
+        xmlhttp.open("GET", "state_controller.php?data=" + JSON.stringify(Ecopy) + "&name=" + par['id'] + "&case=" + match_cases, true);
+        xmlhttp.send();
+        //console.log(JSON.stringify(Ecopy));
+    // console.log('Hello');
+}
+
+function load_game_save(x_load,cases_load){
+    match_cases = cases_load;
+    Ecopy = x_load;
+    met = false;
+    //console.log(match_cases);
+    main(x_load);
+    console.log("What you feared is true");
+}
 
 function init(x){
-  main(x);
+    Ecopy = []; //check if the saved stated work perfectly with these two initializers
+    match_cases = 0;
+    met = false;
+    clicked_save();
+    main(x);
  // return;
     
 }
 
+
+
 function main(Board){
 
-
-
-
-let ECopy = [];
-let match_cases = 0;
+    
+console.log(match_cases);
 let max = Board[0][0].substring(0,2);
 function _loadLevel(array) {
    // console.log('Hello');
@@ -255,6 +312,10 @@ grid.addEventListener('mousemove', function (event) {
                 _loadLevel(Board);
             if(matches){
                 mouse_down=false;
+                console.log("==");
+                console.log(max);
+                console.log("==");
+                console.log(match_cases);
                 match_cases++;  //Counting the total lines drawn
             }
         }
@@ -275,14 +336,18 @@ grid.addEventListener('mouseup', function (event) {
       //  console.log("Line up");
         Board = JSON.parse(JSON.stringify(Ecopy));
           _loadLevel(Board);
+          console.log(Ecopy);
        
-    }
+    }else Ecopy = JSON.parse(JSON.stringify(Board)); //Delete if program is not functioning properly
     
-    console.log(match_cases);
-        console.log(max);
-     if(match_cases == max){
-        window.alert("YOU WIN");
+    
+     if(match_cases == max || match_cases > max ){
+        if(met == false){ 
+        window.alert("Continue to Main Menu");
         win();
+        met = true;
+        }
+        
        // let x = 1;
        // return true;
 //  ADD STUDD HERE
@@ -290,17 +355,15 @@ grid.addEventListener('mouseup', function (event) {
     //levelInfo = JSON.parse(response);
          
    // return;
-
-       // history.go(0);
+    
+   location.replace("levels.php");
+      // history.go(0); //uncomment this after the project debugging
 
     }
-   // let gr =   document.getElementById('grid'); //Pointer to html element
-   // grid.innerHTML = "saif dsfasdfasdfasdf";
-    
+  
    
 
-    mouse_down = false;
-   
+    mouse_down = false;  
     
 });
 

@@ -1,77 +1,87 @@
 <?php
 require_once("utils/_init.php");
-//require_once("utils/storage.php");
 require_once("header.php");
-// define variables and set to empty values
-//$name = $email = $gender = $comment = $website = "";
 $users=$users_store->findAll();
 
+$levels_cur = $levels_store->findAll();
 
-if (verify_post("name","email","psw","psw_repeat")) {
+// $users_store = new JSONStorage("${BASE_DIR}/user_data.json");
+// $levels_store = new JSONStorage("${BASE_DIR}/about_levels.json");
+// $levels_data = new JSONStorage("${BASE_DIR}/levels_data.json");
+//$messages = [];
+$name = null;
+$email = null;
+$psw = null;
+$psw_repeat = null;
+
+if(verify_post("name","email","psw","psw_repeat")) {
   $name = $_POST["name"];
   $email = $_POST["email"];
   $psw = $_POST["psw"];
   $psw_repeat = $_POST["psw_repeat"];
 
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $messages[] = "Invalid email format";
+  }
 
+  if($psw != $psw_repeat){
+    $messages[] = "Password does not match";
+ }
 
-    if($psw != $psw_repeat){
-       $messages[] = "Password does not match";
+  foreach($users as $user){
+   
+    if($email===$user["email"]){
+      $messages[] = "The account with this email already exists!";
+      break;
     }
-    else {
-      foreach($users as $user){
-        if($email===$user["email"]){
-          $messages[] = "The account with this email already exists!";
-          break;
-        }
-      }
+  }
+    
+    
       if(empty($messages)){
         
-        $user = [
+         $user = [
           "id"=>(count($users)+1),
-        "name" => $name,
-        "email" => $email,
-        "pass" => $psw
-        ];
-    
-        $users_store->add($user);
-        $msg = "Successful Registration";
-        //echo "<script type='text/javascript'>alert('$msg');</script>";
-        redirect("log_in.php");
+          "name" => $name,
+          "email" => $email,
+          "pass" =>sha1($psw)
+          ];
+    // Create another json file which will contain the name of all the solved puzzles by you. OR create amother method which can update the puzzle when you want 
+         $users_store->add($user);
+
+          $users = $users_store->findAll();
+           $i=0;
+         foreach($users as $key => $val){
+           if($email === $users[$key]["email"]){
+             $i = $key;
+             break;
+           }
+         }
+         $j = 0;
+         foreach($levels_cur as $k):
+             $j = $k["name"];
+            $users[$i][$j]= "no";
+         
+        // // $newJsonString = json_encode($users);
+        
+         $users_store->update($i, $users[$i]);
+        
+         endforeach;
+          // Another method which comes to mind is this one
+
+          session_start();
+          // $_SESSION['name'] = $row['username']; 
+          $_SESSION['banda'] = $user;
+          redirect("levels.php");
+          //redirect("log_in.php"); //Make it redirect to levels.php in future and also start php session with it.
+   
+
         }
      }
-}
 
 
 
-    // convert form data to json format
-    /*
-    function test_input($data) {
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-  return $data;
-}
-        $postArray = array(
-          "name" => $_POST['name'],
-          "email" => $_POST['email'],
-          "psw" => $_POST['psw'],
-          
-        ); //you might need to process any other post fields you have..
-    
-    $json = json_encode( $postArray );
-    // make sure there were no problems
-    //if( json_last_error() != JSON_ERROR_NONE ){
-        //exit;  // do your error handling here instead of exiting
-    // }
-    $file = 'user_data.json';
-    // write to file
-    //   note: _server_ path, NOT "web address (url)"!
-    file_put_contents( $file, $json, FILE_APPEND);
-   
-    } 
-    
-    */
+
+
 ?>
 
 <head>
@@ -80,30 +90,30 @@ if (verify_post("name","email","psw","psw_repeat")) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="sign_up.css"/>
     <title>Document</title>
+    
 </head>
- <form action="<?php echo $_SERVER["PHP_SELF"];?>" style="border:1px solid #ccc" method = "post">
+
+<?php require_once("messages.php");?> 
+
+ <form action="<?php echo $_SERVER["PHP_SELF"];?>" method = "post">
   <div class="container">
     <h1>Sign Up</h1>
     <p>Please fill in this form to create an account.</p>
     <hr>
 
     <label for="name"><b>Name</b></label>
-    <input type="text" placeholder="Enter Name" name="name" required>
+<input type="text" placeholder="Enter Name" name="name" <?php if(!empty($messages)):?>value="<?= $name;?>"<?php endif;?> required>
 
     <label for="email"><b>Email</b></label>
-    <input type="email" placeholder="someone@example.com" name="email" required>
+    <input type="email" placeholder="someone@example.com" name="email" <?php if(!empty($messages)):?>value="<?= $email;?>"<?php endif;?> required>
 
    
     <label for="psw">Password</label>
-    <input type="text" id="psw" name="psw" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+    <input type="password" id="psw" name="psw" required>
     <label for="psw_repeat">Repeat Password</label>
-    <input type="text"  name="psw_repeat" required>
+    <input type="password"  name="psw_repeat" required>
 
-    <label>
-      <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-    </label>
-
-    <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+    <p>By creating an account you agree to our Terms & Privacy.</p>
 
     <div class="clearfix">
       <button type="button" class="cancelbtn">Cancel</button>
@@ -112,4 +122,3 @@ if (verify_post("name","email","psw","psw_repeat")) {
   </div>
 </form>
 
-<?php require("messages.php"); ?>
