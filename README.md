@@ -1,6 +1,8 @@
 # Flow-Free-Game
 Messengers – Web programming JavaScript home project.
 
+[a link](To see a fully deployed version of the game on website visit)
+
 The code generates a Rectangular Grid in which there are multiple pairs of numbers. The same numbers have to be joined with each other through a line. The game continues until all the numbers are matched with each other.
 The default game has three levels.
 Easy, Medium, Hard
