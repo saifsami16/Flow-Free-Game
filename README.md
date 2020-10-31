@@ -14,3 +14,6 @@ The admin account has the previlege of adding or removing new puzzles or levels 
 The project as a whole comprises of two parts:
 First part consists of creating the base logic for the game which is mostly implemented in Javascript.
 The Second step is about deploying it on an online accessible server and PHP is used for this purpose.
+
+Project part 1 just contains java script code
+But the project part two contains a full website which has a database and allows user to store and delete data
